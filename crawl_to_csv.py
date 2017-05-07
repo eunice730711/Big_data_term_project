@@ -13,12 +13,12 @@ for i in range(1,500):
     page = 'https://www.ptt.cc/bbs/Gossiping/index' + str(i) + '.html'
     print(page)
     resp = resq.get(page)
-    soup = BeautifulSoup(resp.text,"html5lib")
+    soup = BeautifulSoup(resp.text, "lxml")
     for entry in soup.select('.r-ent'):
         for link in entry.find_all('a'):
             urls = link.get('href')
             content = resq.get("https://www.ptt.cc" + str(urls))
-            soup = BeautifulSoup(content.text,"html5lib")
+            soup = BeautifulSoup(content.text, "lxml")
             for entry in soup.select('.push'):
                 if entry.find('span'):
                     data.append([entry.select('span')[0].text.encode('utf-8'), entry.select('span')[2].text[2:].encode('utf-8'), entry.select('.push-ipdatetime')[0].text.encode('utf-8')])
